@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="Weather-App overflow-hidden">
+        <div class="Search-Form">
+          <div class="row">
+            <div class="col-6">
+              <div class="quote">
+                <p>
+                  <em>
+                    "Wherever you go, no matter what the weather, always bring
+                    your own sunshine."</em
+                  >
+                </p>
+              </div>
+            </div>
+
+            <span class="col-6">
+              <form id="search-city-form">
+                <input
+                  type="search"
+                  placeholder="Enter City"
+                  class="search-bar pe-1 mb-1 me-2"
+                  autocomplete="off"
+                  id="city-input"
+                />
+                <button
+                  type="submit"
+                  class="btn btn-outline-light btn-sm ps-3 pe-3 shadow-sm"
+                  id="search-button"
+                >
+                  Search
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-outline-light btn-sm ps-3 shadow-sm"
+                  id="current-location-button"
+                >
+                  <em>Current📌</em>
+                </button>
+              </form>
+            </span>
+          </div>
+        </div>
+
+        <div class="Current-Location clearfix p-3">
+          <div class="row gx-3 gy-4">
+            <div class="col-6">
+              <div class="sub-container p-3 border shadow-sm">
+                <div class="row city">
+                  <h3 id="current-city"></h3>
+                  <h6>Currently</h6>
+                </div>
+
+                <div class="row">
+                  <div class="col-5">
+                    <div>
+                      <span class="temperature" id="current-temperature"></span>
+                      <span class="units"
+                        >° <a href="#" class="unitsFahrenheit">F</a></span
+                      >
+                      <span class="units" id="units-celsius">
+                        | <a href="#" class="unitsCelsius">°C</a></span
+                      >
+                      <div>
+                        <ul>
+                          <li class="feelsLike pt-2 fst-italic">
+                            <span>Feels Like: </span>
+                            <span id="feels-like"></span>
+                          </li>
+                          <li class="wind fst-italic">
+                            Wind: <span id="wind"></span>
+                          </li>
+                          <li class="humidity fst-italic">
+                            Humidity: <span id="humidity"></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-7 clearfix">
+                    <span class="time" id="current-time">1:34</span>
+                    <span class="meridiem"> P.M.</span>
+
+                    <div style="float: left">
+                      <div class="weather-icon">
+                        <img
+                          src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                          alt="Sun with clouds"
+                        />
+                      </div>
+                    </div>
+
+                    <span
+                      class="float-start text-break text-capitalize"
+                      id="current-description"
+                    >
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="Todays-Forecast clearfix">
+                <div class="sub-container p-3 border shadow-sm">
+                  <div class="row date">
+                    <h3 id="todays-date"></h3>
+                    <h6 id="current-day"></h6>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="high-low">
+                        <span class="high" id="todays-high">74°</span>
+                        <div class="low" id="todays-low">56°</div>
+                      </div>
+                    </div>
+
+                    <div class="col-8 clearfix">
+                      <div class="weather">
+                        <div style="float: left">
+                          <div class="today-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/rain.png"
+                              alt="Rainclouds"
+                            />
+                            <span
+                              class="mt-3 mb-5 pb-5 text-capitalize text-break"
+                              >Showers</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="float-end text-break text-capitalize"
+                        id="todays-description"
+                      >
+                        Thunder storms during the evening then skies turn cloudy
+                        overnight
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="five-day-forecast m-10 clearfix">
+              <div
+                class="five-day-header mx-auto mt-3 pt-3 pb-2"
+                style="width: 200px"
+              >
+                <h4><em>5 Day Forecast</em></h4>
+              </div>
+
+              <div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">
+                <div class="col">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
+                    <div class="forecast-dates pb-2 bd-highlight">Tue 11</div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="day-one-high-low">
+                          <span class="day-one-high">72°</span>
+                          <div class="day-one-low">| 49°</div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div style="float: left">
+                          <div class="day-one-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png"
+                              alt="thunderstorms"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="day-one-forecast">
+                          Scattered thunderstorms
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
+                    <div class="row forecast-dates pb-2 bd-highlight">
+                      Wed 12
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="day-two-high-low">
+                          <span class="day-two-high">72°</span>
+                          <div class="day-two-low">| 49°</div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div style="float: left">
+                          <div class="day-two-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/48/cloudy.png"
+                              alt="mostly-cloudy"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="day-two-forecast">Mostly cloudy</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
+                    <div class="row forecast-dates pb-2 bd-highlight">
+                      Thur 13
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="day-three-high-low">
+                          <span class="day-three-high">81°</span>
+                          <div class="day-three-low">| 63°</div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div style="float: left">
+                          <div class="day-three-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+                              alt="sunny"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="day-three-forecast">Sunny and clear</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
+                    <div class="row forecast-dates pb-2 bd-highlight">
+                      Fri 14
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="day-four-high-low">
+                          <span class="day-four-high">86°</span>
+                          <div class="day-four-low">| 67°</div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div style="float: left">
+                          <div class="day-four-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+                              alt="cloudy"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="day-four-forecast">Partly cloudy</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
+                    <div class="row forecast-dates pb-2 bd-highlight">
+                      Sat 15
+                    </div>
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="day-five-high-low">
+                          <span class="day-five-high">91°</span>
+                          <div class="day-five-low">| 72°</div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 ps-1">
+                        <div style="float: left">
+                          <div class="day-five-weather-icon">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+                              alt="sunny"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="day-five-forecast">Sunny and clear</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/script.js"></script>
+  </body>
+</html>
