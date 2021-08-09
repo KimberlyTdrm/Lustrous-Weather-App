@@ -8,6 +8,12 @@ p {
   font-size: 18px;
 }
 
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: azure;
+}
+
 .quote {
   font-size: 18px;
   font-weight: 700;
@@ -162,4 +168,9 @@ ul {
   display: block;
   margin: 0 auto;
   padding-top: 5px;
+}
+
+.gitHub-link {
+  text-decoration: none;
+  color: rgb(255, 199, 199);
 }
