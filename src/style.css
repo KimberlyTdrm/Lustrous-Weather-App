@@ -1,0 +1,161 @@
+body {
+  font-family: "Merriweather", serif;
+  max-width: 100%;
+
+  margin: auto;
+}
+p {
+  font-size: 18px;
+}
+
+.quote {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #f9decf;
+}
+
+.Weather-App {
+  display: block;
+  max-width: 750px;
+  max-height: fit-content;
+  border: 1px solid purple;
+  border-radius: 6px;
+  margin: 0 auto;
+  padding: 20px 15px;
+
+  background-image: url(https://images.pexels.com/photos/2440078/pexels-photo-2440078.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500);
+}
+
+.Search-Form {
+  padding: 24px 20px 0;
+}
+
+.search-bar {
+  max-width: 95%;
+}
+
+.Current-Location,
+.Todays-Forecast {
+  max-width: 100%;
+}
+
+.sub-container {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: rgb(112, 79, 79);
+}
+
+.temperature,
+.high,
+.time {
+  font-size: 30px;
+}
+
+.unitsCelsius,
+.unitsFahrenheit {
+  color: rgb(112, 79, 79);
+  font-size: 14px;
+  position: relative;
+  text-decoration-line: none;
+}
+
+li,
+.feelsLike,
+.humidity,
+.wind {
+  font-size: 14px;
+  list-style: none;
+  margin-left: 0;
+}
+
+ul {
+  padding-left: 0px;
+}
+
+.weather-icon,
+.today-weather-icon {
+  position: relative;
+  margin-top: -10px;
+}
+
+.date {
+  padding: 0 12px;
+}
+
+.high-low {
+  font-size: 18px;
+  text-align: center;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 2px;
+}
+
+.high {
+  font-weight: 400;
+  text-align: right;
+}
+
+.low {
+  display: inline-block;
+  font-size: 20px;
+}
+
+.weather {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.weather-tonight {
+  text-align: left;
+}
+
+.forecast-dates {
+  font-size: 16px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.five-day-forecast {
+  font-size: 12px;
+  color: #f9decf;
+}
+
+.day-one-high,
+.day-two-high,
+.day-three-high,
+.day-four-high,
+.day-five-high {
+  font-size: 20px;
+}
+
+.day-one-low,
+.day-two-low,
+.day-three-low,
+.day-four-low,
+.day-five-low {
+  font-size: 16px;
+  padding-top: 2px;
+}
+
+.day-one-weather-icon,
+.day-two-weather-icon,
+.day-three-weather-icon,
+.day-four-weather-icon,
+.day-five-weather-icon {
+  position: relative;
+  margin-left: -18px;
+  padding-left: 8px;
+}
+
+.day-one-forecast,
+.day-two-forecast,
+.day-three-forecast,
+.day-four-forecast,
+.day-five-forecast {
+  font-size: 14px;
+  font-weight: 575;
+  display: block;
+  margin: 0 auto;
+  padding-top: 5px;
+}
