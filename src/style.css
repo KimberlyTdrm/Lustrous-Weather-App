@@ -59,10 +59,15 @@ footer {
 
 .unitsCelsius,
 .unitsFahrenheit {
-  color: rgb(112, 79, 79);
   font-size: 14px;
   position: relative;
   text-decoration-line: none;
+  top: -4px;
+}
+
+.units {
+  position: relative;
+  top: -8px;
 }
 
 li,
@@ -173,4 +178,13 @@ ul {
 .gitHub-link {
   text-decoration: none;
   color: rgb(255, 199, 199);
+}
+
+.current-weather-temperature .active {
+  color: rgb(112, 79, 79);
+  cursor: default;
+}
+
+.current-weather-temperature .active:hover {
+  color: rgba(0, 0, 128, 0.507);
 }
