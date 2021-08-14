@@ -52,7 +52,17 @@ let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
 function displayWeatherEnvironment(response) {
-  console.log(response);
+  let currentWeatherIconElement = document.querySelector(
+    "#current-weather-icon"
+  );
+  currentWeatherIconElement.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  currentWeatherIconElement.setAttribute(
+    "alt",
+    response.data.weather[0].description
+  );
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
@@ -89,7 +99,6 @@ searchForm.addEventListener("submit", exploreMetropolis);
 searchCity("New York");
 
 function showCurrentWeather(response) {
-  console.log(response.data);
   fahrenheitTemperature = response.data.main.temp;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-temperature").innerHTML = Math.round(
@@ -107,14 +116,13 @@ function showCurrentWeather(response) {
 }
 
 function fetchPosition(position) {
-  console.log(position);
   let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
   let units = "imperial";
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
   let apiUrl = `${apiEndpoint}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  console.log(apiUrl);
+
   axios.get(apiUrl).then(showCurrentWeather);
 }
 
