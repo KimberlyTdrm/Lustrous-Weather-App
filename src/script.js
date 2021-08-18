@@ -52,6 +52,7 @@ let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
 function displayWeatherEnvironment(response) {
+  console.log(response);
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
   );
@@ -64,6 +65,8 @@ function displayWeatherEnvironment(response) {
     response.data.weather[0].description
   );
   document.querySelector("#current-city").innerHTML = response.data.name;
+  document.querySelector("#current-country").innerHTML =
+    response.data.sys.country;
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
   );
@@ -106,6 +109,7 @@ searchForm.addEventListener("submit", exploreMetropolis);
 searchCity("New York");
 
 function showCurrentWeather(response) {
+  console.log(showCurrentWeather);
   fahrenheitTemperature = response.data.main.temp;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-temperature").innerHTML = Math.round(
