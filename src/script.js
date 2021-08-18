@@ -76,6 +76,13 @@ function displayWeatherEnvironment(response) {
     response.data.wind.speed
   );
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+  if (response.data.rain === undefined) {
+    document.querySelector("#precipitation").innerHTML = 0;
+  } else {
+    document.querySelector("#precipitation").innerHTML =
+      response.data.rain["1h"];
+  }
+
   fahrenheitTemperature = response.data.main.temp;
 }
 
@@ -113,6 +120,12 @@ function showCurrentWeather(response) {
     response.data.wind.speed
   );
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+  if (response.data.rain === undefined) {
+    document.querySelector("#precipitation").innerHTML = 0;
+  } else {
+    document.querySelector("#precipitation").innerHTML =
+      response.data.rain["1h"];
+  }
 }
 
 function fetchPosition(position) {
