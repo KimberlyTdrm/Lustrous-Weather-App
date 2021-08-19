@@ -74,6 +74,17 @@ function displayFahrenheitTemperature(event) {
 
 function showCurrentWeather(response) {
   console.log(showCurrentWeather);
+  let currentWeatherIconElement = document.querySelector(
+    "#current-weather-icon"
+  );
+  currentWeatherIconElement.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  currentWeatherIconElement.setAttribute(
+    "alt",
+    response.data.weather[0].description
+  );
   fahrenheitTemperature = response.data.main.temp;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-country").innerHTML =
