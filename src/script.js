@@ -112,6 +112,8 @@ function showCurrentWeather(response) {
   console.log(showCurrentWeather);
   fahrenheitTemperature = response.data.main.temp;
   document.querySelector("#current-city").innerHTML = response.data.name;
+  document.querySelector("#current-country").innerHTML =
+    response.data.sys.country;
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
   );
