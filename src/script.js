@@ -51,62 +51,26 @@ todaysDate.innerHTML = `${month} ${date}, ${year}`;
 let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
-function displayWeatherEnvironment(response) {
-  console.log(response);
-  let currentWeatherIconElement = document.querySelector(
-    "#current-weather-icon"
-  );
-  currentWeatherIconElement.setAttribute(
-    "src",
-    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
-  currentWeatherIconElement.setAttribute(
-    "alt",
-    response.data.weather[0].description
-  );
-  document.querySelector("#current-city").innerHTML = response.data.name;
-  document.querySelector("#current-country").innerHTML =
-    response.data.sys.country;
-  document.querySelector("#current-temperature").innerHTML = Math.round(
-    response.data.main.temp
-  );
-  document.querySelector("#current-description").innerHTML =
-    response.data.weather[0].description;
-  document.querySelector("#feels-like").innerHTML = Math.round(
-    response.data.main.feels_like
-  );
-  document.querySelector("#wind").innerHTML = Math.round(
-    response.data.wind.speed
-  );
-  document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  if (response.data.rain === undefined) {
-    document.querySelector("#precipitation").innerHTML = 0;
-  } else {
-    document.querySelector("#precipitation").innerHTML =
-      response.data.rain["1h"];
-  }
-
-  fahrenheitTemperature = response.data.main.temp;
-}
-
-function searchCity(city) {
-  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
-  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  let units = "imperial";
-  let apiUrl = `${apiEndpoint}?q=${city}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(displayWeatherEnvironment);
-}
-
-function exploreMetropolis(event) {
+function displayCelsiusTemperature(event) {
   event.preventDefault();
-  let city = document.querySelector("#city-input").value;
-  searchCity(city);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9;
+  let currentTemperatureElement = document.querySelector(
+    "#current-temperature"
+  );
+  currentTemperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
-let searchForm = document.querySelector("#search-city-form");
-searchForm.addEventListener("submit", exploreMetropolis);
-
-searchCity("New York");
+function displayFahrenheitTemperature(event) {
+  event.preventDefault();
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
+  let currentTemperatureElement = document.querySelector(
+    "#current-temperature"
+  );
+  currentTemperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
 
 function showCurrentWeather(response) {
   console.log(showCurrentWeather);
@@ -145,30 +109,60 @@ function fetchPosition(position) {
   axios.get(apiUrl).then(showCurrentWeather);
 }
 
-function displayCelsiusTemperature(event) {
-  event.preventDefault();
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
-  let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9;
-  let currentTemperatureElement = document.querySelector(
-    "#current-temperature"
-  );
-  currentTemperatureElement.innerHTML = Math.round(celsiusTemperature);
-}
-
-function displayFahrenheitTemperature(event) {
-  event.preventDefault();
-  fahrenheitLink.classList.add("active");
-  celsiusLink.classList.remove("active");
-  let currentTemperatureElement = document.querySelector(
-    "#current-temperature"
-  );
-  currentTemperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-}
-
 function getGps(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(fetchPosition);
+}
+
+function displayWeatherEnvironment(response) {
+  console.log(response);
+  let currentWeatherIconElement = document.querySelector(
+    "#current-weather-icon"
+  );
+  currentWeatherIconElement.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  currentWeatherIconElement.setAttribute(
+    "alt",
+    response.data.weather[0].description
+  );
+  fahrenheitTemperature = response.data.main.temp;
+  document.querySelector("#current-city").innerHTML = response.data.name;
+  document.querySelector("#current-country").innerHTML =
+    response.data.sys.country;
+  document.querySelector("#current-temperature").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document.querySelector("#current-description").innerHTML =
+    response.data.weather[0].description;
+  document.querySelector("#feels-like").innerHTML = Math.round(
+    response.data.main.feels_like
+  );
+  document.querySelector("#wind").innerHTML = Math.round(
+    response.data.wind.speed
+  );
+  document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+  if (response.data.rain === undefined) {
+    document.querySelector("#precipitation").innerHTML = 0;
+  } else {
+    document.querySelector("#precipitation").innerHTML =
+      response.data.rain["1h"];
+  }
+}
+
+function searchCity(city) {
+  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+  let units = "imperial";
+  let apiUrl = `${apiEndpoint}?q=${city}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayWeatherEnvironment);
+}
+
+function exploreMetropolis(event) {
+  event.preventDefault();
+  let city = document.querySelector("#city-input").value;
+  searchCity(city);
 }
 
 let fahrenheitTemperature = null;
@@ -181,3 +175,8 @@ celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+
+let searchForm = document.querySelector("#search-city-form");
+searchForm.addEventListener("submit", exploreMetropolis);
+
+searchCity("New York");
