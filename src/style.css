@@ -1,9 +1,11 @@
 body {
   font-family: "Merriweather", serif;
   max-width: 100%;
-
   margin: auto;
+  background-image: url("https://s3.amazonaws.com/shecodesio-production/uploads/files/000/015/829/original/mountains-clear-water.jpg?1629755838");
+  background-size: cover;
 }
+
 p {
   font-size: 18px;
 }
@@ -14,23 +16,30 @@ footer {
   color: azure;
 }
 
+ul {
+  padding-left: 0px;
+}
+
 .quote {
   font-size: 18px;
   font-weight: 700;
   line-height: 24px;
-  color: #f9decf;
+  color: rgba(0, 0, 128, 0.807);
+  text-shadow: 1px 1px 2px white;
+}
+
+.current-button,
+.search-button {
+  color: rgba(0, 0, 128, 0.807);
+  text-shadow: 1px 1px 2px white;
 }
 
 .Weather-App {
   display: block;
   max-width: 750px;
   max-height: fit-content;
-  border: 1px solid purple;
-  border-radius: 6px;
   margin: 0 auto;
   padding: 20px 15px;
-
-  background-image: url(https://images.pexels.com/photos/2440078/pexels-photo-2440078.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500);
 }
 
 .Search-Form {
@@ -48,7 +57,7 @@ footer {
 
 .sub-container {
   background-color: rgba(255, 255, 255, 0.85);
-  color: rgb(112, 79, 79);
+  color: rgba(0, 0, 128, 0.807);
 }
 
 .temperature,
@@ -77,10 +86,6 @@ li,
   font-size: 14px;
   list-style: none;
   margin-left: 0;
-}
-
-ul {
-  padding-left: 0px;
 }
 
 .weather-icon,
@@ -129,7 +134,7 @@ ul {
 
 .five-day-forecast {
   font-size: 12px;
-  color: rgba(0, 0, 128, 0.507);
+  color: rgba(0, 0, 128, 0.807);
 }
 
 .five-day-header {
@@ -181,7 +186,7 @@ ul {
 }
 
 .current-weather-temperature .active {
-  color: rgb(112, 79, 79);
+  color: rgba(0, 0, 128, 0.807);
   cursor: default;
 }
 
