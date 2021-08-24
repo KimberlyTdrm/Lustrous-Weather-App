@@ -180,9 +180,16 @@ li,
   padding-top: 5px;
 }
 
-.gitHub-link {
+.gitHub-link,
+.linkedin-link:hover {
   text-decoration: none;
-  color: rgb(255, 199, 199);
+  color: aqua;
+}
+
+.linkedin-link,
+.gitHub-link:hover {
+  text-decoration: none;
+  color: #fff;
 }
 
 .current-weather-temperature .active {
