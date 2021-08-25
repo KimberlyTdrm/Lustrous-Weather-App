@@ -51,6 +51,65 @@ todaysDate.innerHTML = `${month} ${date}, ${year}`;
 let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">`;
+  let days = ["Wed", "Thur", "Fri", "Sat", "Sun"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+    
+                <div class="col">
+                  <div class="forecast-sub-container rounded px-2 py-3 border shadow-sm">
+                    <div class="forecast-dates pb-2 bd-highlight">${day}</div>
+                    <div class="row">
+                      <div class="col">
+                        
+                        <div class="day-one-high-low" style="float: center">
+                          <span class="day-one-high">72°</span>
+                          <span class="day-one-low">| 49°</span>
+                        </div>
+                        
+                      </div>
+
+                      <div class="col">
+                      
+                        <div style="float: left">
+                          <div class="day-one-weather-icon ">
+                            <img
+                              src="https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png"
+                              alt="thunderstorms"
+                              width="56"
+                            />
+                          </div>
+                        </div>
+                       
+                      </div>
+
+                       <span class="d-lg-none col">
+                         <ul>
+                         <li>Sunrise: 06:28</li>
+                         <li>Sunset: 19:54</li>
+                         <li>UV Index: 8</li>
+                         </ul>
+                       </span>
+                      
+                        <span class="day-one-forecast">
+                          Scattered thunderstorms
+                        </span>
+                      
+                    </div>
+                  </div>
+                </div>
+`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayCelsiusTemperature(event) {
   event.preventDefault();
   celsiusLink.classList.add("active");
@@ -73,7 +132,7 @@ function displayFahrenheitTemperature(event) {
 }
 
 function showCurrentWeather(response) {
-  console.log(showCurrentWeather);
+  console.log(response);
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
   );
@@ -190,4 +249,5 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let searchForm = document.querySelector("#search-city-form");
 searchForm.addEventListener("submit", exploreMetropolis);
 
+displayForecast();
 searchCity("New York");
