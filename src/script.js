@@ -55,29 +55,29 @@ function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">`;
-  let days = ["Wed", "Thur", "Fri", "Sat", "Sun"];
+  let days = ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   days.forEach(function (day) {
     forecastHTML =
       forecastHTML +
       `
     
                 <div class="col">
-                  <div class="forecast-sub-container rounded px-2 py-3 border shadow-sm">
+                  <div class="sub-container px-2 py-3 border shadow-sm">
                     <div class="forecast-dates pb-2 bd-highlight">${day}</div>
                     <div class="row">
-                      <div class="col">
-                        
-                        <div class="day-one-high-low" style="float: center">
-                          <span class="day-one-high">72°</span>
-                          <span class="day-one-low">| 49°</span>
-                        </div>
-                        
-                      </div>
 
-                      <div class="col">
+                    
+                      <div class="col-6 forecast-breakpoint">
+                        <div class="day-one-high-low">
+                          <span class="day-one-high">72°</span>
+                          <div class="day-one-low">| 49°</div>
+                        </div>
+                      </div>
                       
+
+                      <div class="col-2 icon-breakpoint">
                         <div style="float: left">
-                          <div class="day-one-weather-icon ">
+                          <div class="day-one-weather-icon">
                             <img
                               src="https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png"
                               alt="thunderstorms"
@@ -85,21 +85,29 @@ function displayForecast() {
                             />
                           </div>
                         </div>
-                       
                       </div>
 
-                       <span class="d-lg-none col">
+                       <span class="col-3 d-lg-none w-25 list-breakpoint">
                          <ul>
                          <li>Sunrise: 06:28</li>
                          <li>Sunset: 19:54</li>
                          <li>UV Index: 8</li>
                          </ul>
                        </span>
-                      
-                        <span class="day-one-forecast">
+
+                     
+                     <div class="c d-lg-none w-25">
+                        <div class="day-one-forecast">
                           Scattered thunderstorms
-                        </span>
-                      
+                        </div>
+                      </div>
+
+                      <div class="row d-none d-lg-block">
+                        <div class="day-one-forecast">
+                          Scattered thunderstorms
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
