@@ -51,7 +51,8 @@ todaysDate.innerHTML = `${month} ${date}, ${year}`;
 let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">`;
@@ -192,6 +193,16 @@ function getGps(event) {
   navigator.geolocation.getCurrentPosition(fetchPosition);
 }
 
+function summonFiveDayForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/onecall?";
+  let units = "imperial";
+  let apiUrl = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayWeatherEnvironment(response) {
   console.log(response);
   let currentWeatherIconElement = document.querySelector(
@@ -227,6 +238,8 @@ function displayWeatherEnvironment(response) {
     document.querySelector("#precipitation").innerHTML =
       response.data.rain["1h"];
   }
+
+  summonFiveDayForecast(response.data.coord);
 }
 
 function searchCity(city) {
@@ -257,5 +270,4 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let searchForm = document.querySelector("#search-city-form");
 searchForm.addEventListener("submit", exploreMetropolis);
 
-displayForecast();
 searchCity("New York");
