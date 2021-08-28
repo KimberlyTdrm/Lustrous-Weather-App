@@ -81,9 +81,11 @@ function displayForecast(response) {
     
                 <div class="col">
                   <div class="sub-container px-2 py-3 border shadow-sm">
+
                     <div class="forecast-dates pb-2 bd-highlight">${formatDay(
                       forecastDay.dt
                     )}</div>
+
                     <div class="row">
 
                     
@@ -113,28 +115,29 @@ function displayForecast(response) {
                         </div>
                       </div>
 
-                       <span class="col-3 d-lg-none w-25 list-breakpoint">
-                         <ul>
-                         <li>Sunrise: ${formatTime(forecastDay.sunrise)}</li>
-                         <li>Sunset: ${formatTime(forecastDay.sunset)}</li>
-                         <li>UV Index: ${Math.round(forecastDay.uvi)}</li>
-                         </ul>
-                       </span>
+                        <span class="col-3 d-lg-none w-25 list-breakpoint">
+                          <ul>
+                            <li>Sunrise: ${formatTime(forecastDay.sunrise)}</li>
+                            <li>Sunset: ${formatTime(forecastDay.sunset)}</li>
+                            <li>UV Index: ${Math.round(forecastDay.uvi)}</li>
+                          </ul>
+                        </span>
 
                      
-                     <div class="c d-lg-none w-25">
-                        <div class="day-one-forecast text-capitalize">
+                        <div class="c d-lg-none w-25">
+                          <div class="day-one-forecast text-capitalize">
                            ${forecastDay.weather[0].description}
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="row d-none d-lg-block">
+                       <div class="row d-none d-lg-block">
                         <div class="day-one-forecast text-capitalize">
                          ${forecastDay.weather[0].description}
                         </div>
-                      </div>
+                       </div>
 
                     </div>
+
                   </div>
                 </div>
 `;
@@ -201,6 +204,12 @@ function showCurrentWeather(response) {
     document.querySelector("#precipitation").innerHTML =
       response.data.rain["1h"];
   }
+  document.querySelector("#todays-high").innerHTML = Math.round(
+    response.data.main.temp_max
+  );
+  document.querySelector("#todays-low").innerHTML = Math.round(
+    response.data.main.temp_min
+  );
 
   summonFiveDayForecast(response.data.coord);
 }
@@ -266,6 +275,12 @@ function displayWeatherEnvironment(response) {
     document.querySelector("#precipitation").innerHTML =
       response.data.rain["1h"];
   }
+  document.querySelector("#todays-high").innerHTML = Math.round(
+    response.data.main.temp_max
+  );
+  document.querySelector("#todays-low").innerHTML = Math.round(
+    response.data.main.temp_min
+  );
 
   summonFiveDayForecast(response.data.coord);
 }
