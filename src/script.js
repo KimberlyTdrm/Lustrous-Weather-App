@@ -51,27 +51,50 @@ todaysDate.innerHTML = `${month} ${date}, ${year}`;
 let currentDay = document.querySelector("#current-day");
 currentDay.innerHTML = `${day}`;
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return days[day];
+}
+
 function displayForecast(response) {
-  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
+  console.log(response.data.daily);
+  let forecast = response.data.daily;
 
   let forecastHTML = `<div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">`;
-  let days = ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 5) {
+      forecastHTML =
+        forecastHTML +
+        `
     
                 <div class="col">
                   <div class="sub-container px-2 py-3 border shadow-sm">
-                    <div class="forecast-dates pb-2 bd-highlight">${day}</div>
+                    <div class="forecast-dates pb-2 bd-highlight">${formatDay(
+                      forecastDay.dt
+                    )}</div>
                     <div class="row">
 
                     
                       <div class="col-6 forecast-breakpoint">
                         <div class="day-one-high-low">
-                          <span class="day-one-high">72°</span>
-                          <div class="day-one-low">| 49°</div>
+                          <span class="day-one-high">${Math.round(
+                            forecastDay.temp.max
+                          )}°</span>
+                          <div class="day-one-low">| ${Math.round(
+                            forecastDay.temp.min
+                          )}°</div>
                         </div>
                       </div>
                       
@@ -80,8 +103,10 @@ function displayForecast(response) {
                         <div style="float: left">
                           <div class="day-one-weather-icon">
                             <img
-                              src="https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png"
-                              alt="thunderstorms"
+                              src="http://openweathermap.org/img/wn/${
+                                forecastDay.weather[0].icon
+                              }@2x.png"
+                              alt=""
                               width="56"
                             />
                           </div>
@@ -90,22 +115,22 @@ function displayForecast(response) {
 
                        <span class="col-3 d-lg-none w-25 list-breakpoint">
                          <ul>
-                         <li>Sunrise: 06:28</li>
-                         <li>Sunset: 19:54</li>
-                         <li>UV Index: 8</li>
+                         <li>Sunrise: ${formatTime(forecastDay.sunrise)}</li>
+                         <li>Sunset: ${formatTime(forecastDay.sunset)}</li>
+                         <li>UV Index: ${Math.round(forecastDay.uvi)}</li>
                          </ul>
                        </span>
 
                      
                      <div class="c d-lg-none w-25">
-                        <div class="day-one-forecast">
-                          Scattered thunderstorms
+                        <div class="day-one-forecast text-capitalize">
+                           ${forecastDay.weather[0].description}
                         </div>
                       </div>
 
                       <div class="row d-none d-lg-block">
-                        <div class="day-one-forecast">
-                          Scattered thunderstorms
+                        <div class="day-one-forecast text-capitalize">
+                         ${forecastDay.weather[0].description}
                         </div>
                       </div>
 
@@ -113,6 +138,7 @@ function displayForecast(response) {
                   </div>
                 </div>
 `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -175,6 +201,8 @@ function showCurrentWeather(response) {
     document.querySelector("#precipitation").innerHTML =
       response.data.rain["1h"];
   }
+
+  summonFiveDayForecast(response.data.coord);
 }
 
 function fetchPosition(position) {
