@@ -80,7 +80,7 @@ function displayForecast(response) {
         `
     
                 <div class="col">
-                  <div class="sub-container px-2 py-3 border shadow-sm">
+                  <div class="sub-container daily-forecast px-2 py-3 rounded">
 
                     <div class="forecast-dates pb-2 bd-highlight">${formatDay(
                       forecastDay.dt
