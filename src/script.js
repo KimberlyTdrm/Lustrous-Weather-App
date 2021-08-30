@@ -79,7 +79,7 @@ function displayForecast(response) {
         forecastHTML +
         `
     
-                <div class="col">
+               <div class="col d-lg-flex">
                   <div class="sub-container daily-forecast px-2 py-3 rounded">
 
                     <div class="forecast-dates pb-2 bd-highlight">${formatDay(

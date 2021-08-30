@@ -62,21 +62,6 @@ ul {
   color: rgba(0, 0, 128, 0.807);
 }
 
-@media (max-width: 991.98px) {
-  .daily-forecast {
-    border: 1px solid #dee2e6 !important;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-  }
-}
-
-@media (min-width: 991.98px) {
-  .daily-forecast {
-    background-color: transparent;
-    border: none;
-    box-shadow: 0;
-  }
-}
-
 .temperature,
 .high,
 .time {
@@ -158,12 +143,6 @@ li,
 
 .weather-tonight {
   text-align: left;
-}
-
-@media (min-width: 991.98px) {
-  .weather-forecast {
-    background-color: rgba(255, 255, 255, 0.75);
-  }
 }
 
 .forecast-dates {
