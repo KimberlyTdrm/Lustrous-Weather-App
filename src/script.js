@@ -105,7 +105,7 @@ function displayForecast(response) {
                         <div style="float: left">
                           <div class="day-one-weather-icon">
                             <img
-                              src="http://openweathermap.org/img/wn/${
+                              src="https://openweathermap.org/img/wn/${
                                 forecastDay.weather[0].icon
                               }@2x.png"
                               alt=""
