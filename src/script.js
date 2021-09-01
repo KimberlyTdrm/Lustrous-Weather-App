@@ -148,25 +148,93 @@ function displayForecast(response) {
   forecastElement.innerHTML = forecastHTML;
 }
 
-function displayCelsiusTemperature(event) {
+function aquireDailyInMetric(response) {
+  let apiEndpoint = `https://api.openweathermap.org/data/2.5/onecall?`;
+  let apiUrl = `${apiEndpoint}lat=${response.lat}&lon=${response.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function aquireDailyInImperial(response) {
+  let apiEndpoint = `https://api.openweathermap.org/data/2.5/onecall?`;
+  let apiUrl = `${apiEndpoint}lat=${response.lat}&lon=${response.lon}&appid=${apiKey}&units=imperial`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function exchangeUnits(response) {
+  let currentTemperature = document.querySelector("#current-temperature");
+  let feelsLike = document.querySelector("#feels-like");
+  let windSpeed = document.querySelector("#wind");
+  let todaysHigh = document.querySelector("#todays-high");
+  let todaysLow = document.querySelector("#todays-low");
+  let temperature = response.data.main.temp;
+
+  todaysHigh.innerHTML = Math.round(response.data.main.temp_max);
+  todaysLow.innerHTML = Math.round(response.data.main.temp_min);
+
+  currentTemperature.innerHTML = Math.round(temperature);
+  feelsLike.innerHTML = Math.round(response.data.main.feels_like);
+
+  if (element.classList.contains("active")) {
+    windSpeed.innerHTML = `${Math.round(
+      (response.data.wind.speed * 18) / 5
+    )} km/h`;
+
+    aquireDailyInMetric(response.data.coord);
+  } else {
+    windSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
+
+    aquireDailyInImperial(response.data.coord);
+  }
+
+  if (response.data.rain === undefined) {
+    document.querySelector("#precipitation").innerHTML = 0;
+  } else {
+    document.querySelector("#precipitation").innerHTML =
+      response.data.rain["1h"];
+  }
+}
+
+function displayMetricUnits(event) {
   event.preventDefault();
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
+  units = "metric";
+
+  let cityDisplayed = document.querySelector("#current-city");
+  let city = cityDisplayed.innerHTML;
+
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
+  let apiUrl = `${apiEndpoint}q=${city}&appid=${apiKey}&units=${units}`;
+
+  let displayPrecipitationUnit = document.querySelector("#precipitation-unit");
+  displayPrecipitationUnit.innerHTML = ` mm`;
+
   let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9;
   let currentTemperatureElement = document.querySelector(
     "#current-temperature"
   );
   currentTemperatureElement.innerHTML = Math.round(celsiusTemperature);
+
+  axios.get(apiUrl).then(exchangeUnits);
 }
 
-function displayFahrenheitTemperature(event) {
+function displayImperialUnits(event) {
   event.preventDefault();
   fahrenheitLink.classList.add("active");
   celsiusLink.classList.remove("active");
+  units = "imperial";
+
+  let cityDisplayed = document.querySelector("#current-city");
+  let city = cityDisplayed.innerHTML;
   let currentTemperatureElement = document.querySelector(
     "#current-temperature"
   );
   currentTemperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
+  let apiUrl = `${apiEndpoint}q=${city}&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(exchangeUnits);
 }
 
 function showCurrentWeather(response) {
@@ -183,6 +251,8 @@ function showCurrentWeather(response) {
     response.data.weather[0].description
   );
   fahrenheitTemperature = response.data.main.temp;
+  let displayPrecipitationUnit = document.querySelector("#precipitation-unit");
+  displayPrecipitationUnit.innerHTML = ` mm`;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-country").innerHTML =
     response.data.sys.country;
@@ -194,15 +264,16 @@ function showCurrentWeather(response) {
   document.querySelector("#feels-like").innerHTML = Math.round(
     response.data.main.feels_like
   );
-  document.querySelector("#wind").innerHTML = Math.round(
+  document.querySelector("#wind").innerHTML = `${Math.round(
     response.data.wind.speed
-  );
+  )} mph`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   if (response.data.rain === undefined) {
     document.querySelector("#precipitation").innerHTML = 0;
   } else {
-    document.querySelector("#precipitation").innerHTML =
-      response.data.rain["1h"];
+    document.querySelector(
+      "#precipitation"
+    ).innerHTML = `${response.data.rain["1h"]}`;
   }
   document.querySelector("#todays-high").innerHTML = Math.round(
     response.data.main.temp_max
@@ -215,14 +286,16 @@ function showCurrentWeather(response) {
 }
 
 function fetchPosition(position) {
-  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  let units = "imperial";
+
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
   let apiUrl = `${apiEndpoint}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
 
   axios.get(apiUrl).then(showCurrentWeather);
+
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
 }
 
 function getGps(event) {
@@ -232,9 +305,9 @@ function getGps(event) {
 
 function summonFiveDayForecast(coordinates) {
   console.log(coordinates);
-  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
+
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/onecall?";
-  let units = "imperial";
+
   let apiUrl = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
   console.log(apiUrl);
   axios.get(apiUrl).then(displayForecast);
@@ -254,6 +327,8 @@ function displayWeatherEnvironment(response) {
     response.data.weather[0].description
   );
   fahrenheitTemperature = response.data.main.temp;
+  let displayPrecipitationUnit = document.querySelector("#precipitation-unit");
+  displayPrecipitationUnit.innerHTML = ` mm`;
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#current-country").innerHTML =
     response.data.sys.country;
@@ -265,9 +340,9 @@ function displayWeatherEnvironment(response) {
   document.querySelector("#feels-like").innerHTML = Math.round(
     response.data.main.feels_like
   );
-  document.querySelector("#wind").innerHTML = Math.round(
+  document.querySelector("#wind").innerHTML = `${Math.round(
     response.data.wind.speed
-  );
+  )} mph`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   if (response.data.rain === undefined) {
     document.querySelector("#precipitation").innerHTML = 0;
@@ -286,11 +361,12 @@ function displayWeatherEnvironment(response) {
 }
 
 function searchCity(city) {
-  let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
-  let units = "imperial";
   let apiUrl = `${apiEndpoint}?q=${city}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayWeatherEnvironment);
+
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
 }
 
 function exploreMetropolis(event) {
@@ -301,14 +377,20 @@ function exploreMetropolis(event) {
 
 let fahrenheitTemperature = null;
 
+let apiKey = "0bcd7ddcb27e38fd12ad8e86572870d2";
+
+let units = "imperial";
+
 let currentLocation = document.querySelector("#current-location-button");
 currentLocation.addEventListener("click", getGps);
 
 let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", displayCelsiusTemperature);
+celsiusLink.addEventListener("click", displayMetricUnits);
+
+let element = document.querySelector("#celsius-link");
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+fahrenheitLink.addEventListener("click", displayImperialUnits);
 
 let searchForm = document.querySelector("#search-city-form");
 searchForm.addEventListener("submit", exploreMetropolis);
