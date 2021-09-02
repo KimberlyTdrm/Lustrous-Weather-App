@@ -1,4 +1,4 @@
-function formatTime(time) {
+function formatTime() {
   let hours = now.getHours();
   if (hours < 10) {
     hours = `0${hours}`;
@@ -26,18 +26,18 @@ let days = [
 ];
 let day = days[now.getDay()];
 let months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
+  "January",
+  "February",
+  "March",
+  "April",
   "May",
   "June",
   "July",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 let month = months[now.getMonth()];
 
@@ -55,19 +55,52 @@ function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
   let day = date.getDay();
   let days = [
-    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
+    "Sunday",
   ];
   return days[day];
 }
 
 function displayForecast(response) {
+  let popElement = document.querySelector("#todays-pop");
+  let popPercentElement = Math.round(response.data.daily[0].pop * 100);
+  popElement.innerHTML = `Chance of Precipitation: ${popPercentElement}%`;
+
+  let uviElement = document.querySelector("#todays-uvi");
+  uviElement.innerHTML = `UV Index: ${response.data.current.uvi}`;
+
+  let sunriseElement = document.querySelector("#todays-sunrise");
+  let sunsetElement = document.querySelector("#todays-sunset");
+  if (element.classList.contains("active")) {
+    sunriseElement.innerHTML = `Sunrise: ${formatTime(
+      response.data.current.sunrise
+    )}`;
+  } else {
+    sunriseElement.innerHTML = `Sunrise:${formatTime(
+      response.data.current.sunrise
+    )}
+   AM`;
+  }
+
+  if (element.classList.contains("active")) {
+    sunsetElement.innerHTML = `Sunset: ${formatTime(
+      response.data.current.sunset
+    )}`;
+  } else {
+    sunsetElement.innerHTML = `Sunset: ${formatTime(
+      response.data.current.sunset
+    )} PM`;
+  }
+
+  console.log(response);
+
   let forecastElement = document.querySelector("#forecast");
+
   console.log(response.data.daily);
   let forecast = response.data.daily;
 
@@ -94,7 +127,7 @@ function displayForecast(response) {
                           <span class="day-one-high">${Math.round(
                             forecastDay.temp.max
                           )}°</span>
-                          <div class="day-one-low">| ${Math.round(
+                          <div class="day-one-low">|${Math.round(
                             forecastDay.temp.min
                           )}°</div>
                         </div>
@@ -146,6 +179,9 @@ function displayForecast(response) {
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
 }
 
 function aquireDailyInMetric(response) {
@@ -168,8 +204,12 @@ function exchangeUnits(response) {
   let todaysLow = document.querySelector("#todays-low");
   let temperature = response.data.main.temp;
 
-  todaysHigh.innerHTML = Math.round(response.data.main.temp_max);
-  todaysLow.innerHTML = Math.round(response.data.main.temp_min);
+  let sunriseElement = document.querySelector("#todays-sunrise");
+
+  let sunsetElement = document.querySelector("#todays-sunset");
+
+  todaysHigh.innerHTML = `${Math.round(response.data.main.temp_max)}°`;
+  todaysLow.innerHTML = `|${Math.round(response.data.main.temp_min)}°`;
 
   currentTemperature.innerHTML = Math.round(temperature);
   feelsLike.innerHTML = Math.round(response.data.main.feels_like);
@@ -186,11 +226,29 @@ function exchangeUnits(response) {
     aquireDailyInImperial(response.data.coord);
   }
 
-  if (response.data.rain === undefined) {
-    document.querySelector("#precipitation").innerHTML = 0;
+  if (element.classList.contains("active")) {
+    sunriseElement.innerHTML = `Sunrise: ${formatTime(
+      response.data.sys.sunrise
+    )}`;
   } else {
-    document.querySelector("#precipitation").innerHTML =
-      response.data.rain["1h"];
+    sunriseElement.innerHTML = `Sunrise:${formatTime(response.data.sys.sunrise)}
+   AM`;
+  }
+
+  if (element.classList.contains("active")) {
+    sunsetElement.innerHTML = `Sunset: ${formatTime(response.data.sys.sunset)}`;
+  } else {
+    sunsetElement.innerHTML = `Sunset: ${formatTime(
+      response.data.sys.sunset
+    )} PM`;
+  }
+
+  if (response.data.rain == undefined) {
+    document.querySelector("#precipitation").innerHTML = `Precipitation: 0`;
+  } else {
+    document.querySelector(
+      "#precipitation"
+    ).innerHTML = `Precipitation: ${response.data.rain["1h"]}`;
   }
 }
 
@@ -269,18 +327,19 @@ function showCurrentWeather(response) {
   )} mph`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   if (response.data.rain === undefined) {
-    document.querySelector("#precipitation").innerHTML = 0;
+    document.querySelector("#precipitation").innerHTML = `Precipitation: 0`;
   } else {
     document.querySelector(
       "#precipitation"
-    ).innerHTML = `${response.data.rain["1h"]}`;
+    ).innerHTML = `Precipitation: ${response.data.rain["1h"]}`;
   }
-  document.querySelector("#todays-high").innerHTML = Math.round(
+  document.querySelector("#todays-high").innerHTML = `${Math.round(
     response.data.main.temp_max
-  );
-  document.querySelector("#todays-low").innerHTML = Math.round(
+  )}°`;
+
+  document.querySelector("#todays-low").innerHTML = `|${Math.round(
     response.data.main.temp_min
-  );
+  )}°`;
 
   summonFiveDayForecast(response.data.coord);
 }
@@ -327,6 +386,7 @@ function displayWeatherEnvironment(response) {
     response.data.weather[0].description
   );
   fahrenheitTemperature = response.data.main.temp;
+
   let displayPrecipitationUnit = document.querySelector("#precipitation-unit");
   displayPrecipitationUnit.innerHTML = ` mm`;
   document.querySelector("#current-city").innerHTML = response.data.name;
@@ -344,18 +404,22 @@ function displayWeatherEnvironment(response) {
     response.data.wind.speed
   )} mph`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  if (response.data.rain === undefined) {
-    document.querySelector("#precipitation").innerHTML = 0;
-  } else {
-    document.querySelector("#precipitation").innerHTML =
-      response.data.rain["1h"];
-  }
-  document.querySelector("#todays-high").innerHTML = Math.round(
+
+  document.querySelector("#todays-high").innerHTML = `${Math.round(
     response.data.main.temp_max
-  );
-  document.querySelector("#todays-low").innerHTML = Math.round(
+  )}°`;
+
+  document.querySelector("#todays-low").innerHTML = `|${Math.round(
     response.data.main.temp_min
-  );
+  )}°`;
+
+  if (response.data.rain === undefined) {
+    document.querySelector("#precipitation").innerHTML = `Precipitation: 0`;
+  } else {
+    document.querySelector(
+      "#precipitation"
+    ).innerHTML = `Precipitation: ${response.data.rain["1h"]}`;
+  }
 
   summonFiveDayForecast(response.data.coord);
 }
