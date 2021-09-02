@@ -125,12 +125,13 @@
                           </li>
                           <li class="wind fst-italic">
                             Wind: <span id="wind"></span>
+                            <span class="wind-direction" id="direction"></span>
                           </li>
                           <li class="humidity fst-italic">
                             Humidity: <span id="humidity"></span>%
                           </li>
                           <li class="precipitation fst-italic">
-                            Precipitation: <span id="precipitation"></span
+                            <span id="precipitation"></span
                             ><span id="precipitation-unit"></span>
                           </li>
                         </ul>
@@ -179,35 +180,29 @@
                     <div class="col-4">
                       <div class="high-low">
                         <span class="high" id="todays-high"></span>
-                        <span class="degrees-high">°</span>
 
-                        <span class="spacer">|</span>
                         <div class="low d-inline" id="todays-low"></div>
-                        <span class="degrees-low">°</span>
                       </div>
                     </div>
 
-                    <div class="col-8 clearfix">
+                    <div class="col-8">
                       <div class="weather">
-                        <div style="float: left">
-                          <div class="today-weather-icon">
-                            <img
-                              src="https://ssl.gstatic.com/onebox/weather/64/rain.png"
-                              alt="Rainclouds"
-                            />
-                            <span
-                              class="mt-3 mb-5 pb-5 text-capitalize text-break"
-                              >Showers</span
-                            >
-                          </div>
-                        </div>
+                        Today's Outlook
+                        <span class="m text-capitalize text-break"></span>
                       </div>
 
                       <div
                         class="float-end text-break text-capitalize"
                         id="todays-description"
                       >
-                        Storms during the evening then cloudy skies overnight
+                        <ul>
+                          <li class="todaysSunrise" id="todays-sunrise"></li>
+
+                          <li class="todaysSunset" id="todays-sunset"></li>
+
+                          <li class="uvi" id="todays-uvi"></li>
+                          <li class="todaysPop" id="todays-pop"></li>
+                        </ul>
                       </div>
                     </div>
                   </div>
