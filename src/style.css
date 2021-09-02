@@ -90,8 +90,7 @@ li,
   margin-left: 0;
 }
 
-.weather-icon,
-.today-weather-icon {
+.weather-icon {
   position: relative;
   margin-top: -10px;
 }
@@ -116,29 +115,14 @@ li,
 .low {
   display: inline-block;
   font-size: 20px;
-}
-
-.degrees-high {
-  position: relative;
-  top: -8px;
-  left: -2px;
-}
-
-.degrees-low {
-  position: relative;
-  top: -4px;
-  left: -2px;
-}
-
-.spacer {
-  position: relative;
-  bottom: -32px;
-  left: -52px;
+  color: rgba(0, 0, 128, 0.6);
 }
 
 .weather {
   font-weight: 500;
-  font-size: 20px;
+  font-size: 22px;
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 
 .weather-tonight {
@@ -161,38 +145,23 @@ li,
   text-shadow: 1px 1px 2px rgb(33, 202, 245), 0 0 2em white, 0 0 2em white;
 }
 
-.day-one-high,
-.day-two-high,
-.day-three-high,
-.day-four-high,
-.day-five-high {
+.day-one-high {
   font-size: 20px;
 }
 
-.day-one-low,
-.day-two-low,
-.day-three-low,
-.day-four-low,
-.day-five-low {
+.day-one-low {
   font-size: 14px;
   padding-top: 2px;
+  color: rgba(0, 0, 128, 0.6);
 }
 
-.day-one-weather-icon,
-.day-two-weather-icon,
-.day-three-weather-icon,
-.day-four-weather-icon,
-.day-five-weather-icon {
+.day-one-weather-icon {
   position: relative;
   margin-left: -18px;
   padding-left: 8px;
 }
 
-.day-one-forecast,
-.day-two-forecast,
-.day-three-forecast,
-.day-four-forecast,
-.day-five-forecast {
+.day-one-forecast {
   font-size: 14px;
   font-weight: 575;
   display: block;
