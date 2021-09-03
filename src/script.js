@@ -122,7 +122,7 @@ function displayForecast(response) {
                     <div class="row">
 
                     
-                      <div class="col-6 ps-3 forecast-breakpoint">
+                      <div class="col-6 forecast-breakpoint">
                         <div class="day-one-high-low">
                           <span class="day-one-high">${Math.round(
                             forecastDay.temp.max
