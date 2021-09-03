@@ -55,13 +55,13 @@ function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
   let day = date.getDay();
   let days = [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
   return days[day];
 }
@@ -122,7 +122,7 @@ function displayForecast(response) {
                     <div class="row">
 
                     
-                      <div class="col-6 forecast-breakpoint">
+                      <div class="col-6 ps-3 forecast-breakpoint">
                         <div class="day-one-high-low">
                           <span class="day-one-high">${Math.round(
                             forecastDay.temp.max
@@ -150,14 +150,21 @@ function displayForecast(response) {
 
                         <span class="col-3 d-lg-none w-25 list-breakpoint">
                           <ul>
-                            <li>Sunrise: ${formatTime(forecastDay.sunrise)}</li>
-                            <li>Sunset: ${formatTime(forecastDay.sunset)}</li>
                             <li>UV Index: ${Math.round(forecastDay.uvi)}</li>
+                            <li>Humidity: ${forecastDay.humidity}%</li>
+                          </ul>
+                        </span>
+
+                        <span class="col-3 d-lg-none w-25 list-breakpoint">
+                          <ul>
+                            <li>Cloudiness: ${forecastDay.clouds}%</li>
+                            <li>Precip: ${forecastDay.pop * 100}%</li>
+
                           </ul>
                         </span>
 
                      
-                        <div class="c d-lg-none w-25">
+                        <div class="text-center col d-lg-none w-25">
                           <div class="day-one-forecast text-capitalize">
                            ${forecastDay.weather[0].description}
                           </div>
