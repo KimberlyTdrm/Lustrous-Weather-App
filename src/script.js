@@ -230,9 +230,6 @@ function displayForecast(response) {
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
-
-  fahrenheitLink.classList.add("active");
-  celsiusLink.classList.remove("active");
 }
 
 function aquireDailyInMetric(response) {
