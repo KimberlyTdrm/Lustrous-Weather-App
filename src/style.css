@@ -169,12 +169,14 @@ li,
 }
 
 .gitHub-link,
-.linkedin-link:hover {
+.netlify-link,
+.linkedin-link {
   text-decoration: none;
   color: aqua;
 }
 
-.linkedin-link,
+.linkedin-link:hover,
+.netlify-link:hover,
 .gitHub-link:hover {
   text-decoration: none;
   color: #fff;
