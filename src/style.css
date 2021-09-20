@@ -170,7 +170,7 @@ li,
 
 .gitHub-link,
 .netlify-link,
-.linkedin-link {
+.linkedin-link:hover {
   text-decoration: none;
   color: aqua;
 }
