@@ -185,9 +185,7 @@ function displayForecast(response) {
                         <div style="float: left">
                           <div class="day-one-weather-icon">
                             <img
-                              src="https://openweathermap.org/img/wn/${
-                                forecastDay.weather[0].icon
-                              }@2x.png"
+                              src="images/${forecastDay.weather[0].icon}.svg"
                               alt=""
                               width="56"
                             />
@@ -316,7 +314,7 @@ function displayMetricUnits(event) {
   event.preventDefault();
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
-  units = "metric";
+  let units = "metric";
 
   let cityDisplayed = document.querySelector("#current-city");
   let city = cityDisplayed.innerHTML;
@@ -340,7 +338,7 @@ function displayImperialUnits(event) {
   event.preventDefault();
   fahrenheitLink.classList.add("active");
   celsiusLink.classList.remove("active");
-  units = "imperial";
+  let units = "imperial";
 
   let cityDisplayed = document.querySelector("#current-city");
   let city = cityDisplayed.innerHTML;
@@ -357,13 +355,12 @@ function displayImperialUnits(event) {
 
 function showCurrentWeather(response) {
   console.log(response);
+  let iconId = response.data.weather[0].icon;
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
   );
-  currentWeatherIconElement.setAttribute(
-    "src",
-    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
+  currentWeatherIconElement.setAttribute("src", `images/${iconId}.svg`);
+  currentWeatherIconElement.setAttribute("width", "100px");
   currentWeatherIconElement.setAttribute(
     "alt",
     response.data.weather[0].description
@@ -389,6 +386,7 @@ function showCurrentWeather(response) {
     response.data.wind.speed
   )} mph`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+
   if (response.data.rain === undefined) {
     document.querySelector("#precipitation").innerHTML = `Precipitation: 0`;
   } else {
@@ -396,6 +394,7 @@ function showCurrentWeather(response) {
       "#precipitation"
     ).innerHTML = `Precipitation: ${response.data.rain["1h"]}`;
   }
+
   document.querySelector("#todays-high").innerHTML = `${Math.round(
     response.data.main.temp_max
   )}°`;
@@ -458,13 +457,12 @@ function summonFiveDayForecast(coordinates) {
 
 function displayWeatherEnvironment(response) {
   console.log(response);
+  let iconId = response.data.weather[0].icon;
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
   );
-  currentWeatherIconElement.setAttribute(
-    "src",
-    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
+  currentWeatherIconElement.setAttribute("src", `images/${iconId}.svg`);
+  currentWeatherIconElement.setAttribute("width", "100px");
   currentWeatherIconElement.setAttribute(
     "alt",
     response.data.weather[0].description
