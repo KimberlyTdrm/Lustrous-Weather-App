@@ -144,11 +144,8 @@ function displayForecast(response) {
     )}`;
   }
 
-  console.log(response);
-
   let forecastElement = document.querySelector("#forecast");
 
-  console.log(response.data.daily);
   let forecast = response.data.daily;
 
   let forecastHTML = `<div class="row p-1 row-cols-1 row-cols-lg-5 g-2 g-lg-3">`;
@@ -354,7 +351,6 @@ function displayImperialUnits(event) {
 }
 
 function showCurrentWeather(response) {
-  console.log(response);
   let iconId = response.data.weather[0].icon;
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
@@ -446,17 +442,13 @@ function getGps(event) {
 }
 
 function summonFiveDayForecast(coordinates) {
-  console.log(coordinates);
-
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/onecall?";
-
   let apiUrl = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
-  console.log(apiUrl);
+
   axios.get(apiUrl).then(displayForecast);
 }
 
 function displayWeatherEnvironment(response) {
-  console.log(response);
   let iconId = response.data.weather[0].icon;
   let currentWeatherIconElement = document.querySelector(
     "#current-weather-icon"
