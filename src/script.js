@@ -182,7 +182,7 @@ function displayForecast(response) {
                       
 
                       <div class="col-2 icon-breakpoint">
-                        <div style="float: left">
+                       
                           <div class="day-one-weather-icon">
                             <img
                               src="images/${forecastDay.weather[0].icon}.svg"
@@ -190,7 +190,7 @@ function displayForecast(response) {
                               width="56"
                             />
                           </div>
-                        </div>
+                        
                       </div>
 
                         <span class="col-3 d-lg-none w-25 list-breakpoint">
